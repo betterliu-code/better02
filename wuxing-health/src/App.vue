@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import characterImg from './assets/character.png'
 
 const STORAGE_KEY = 'wuxing-health-state'
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -254,8 +255,9 @@ onMounted(restoreState)
         <div class="watercolor-canvas" :class="{ manifesting: isManifesting }">
           <div class="aura aura-fire"></div>
           <div class="aura aura-wood"></div>
+          <img class="portrait" :src="characterImg" alt="五行养生人物" />
           <button class="hair hit-area" type="button" @click="openDiagnosis('hair')" :aria-label="signMap.hair.label">
-            <span :class="['hair-shape', hairStage]"></span>
+            <span :class="['scalp', hairStage]"></span>
           </button>
           <div class="face">
             <button
@@ -279,17 +281,7 @@ onMounted(restoreState)
               @click="openDiagnosis('mouth')"
               aria-label="点击查看嘴周痘诊断"
             ></button>
-            <span class="brow left"></span>
-            <span class="brow right"></span>
-            <span class="eye left"></span>
-            <span class="eye right"></span>
-            <span class="nose"></span>
-            <span class="smile"></span>
-            <span class="blush left"></span>
-            <span class="blush right"></span>
           </div>
-          <div class="neck"></div>
-          <div class="robe"></div>
           <span
             v-for="hair in fallingHairs"
             :key="hair.id"
