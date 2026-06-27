@@ -1,0 +1,56 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="功能模块图与核心模块" id="mod">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="校园生活助手 APP — 功能模块图与核心模块" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="root" value="校园生活助手 APP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="490" y="70" width="220" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" value="主框架&#10;MainActivity + 底部导航" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="200" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2" value="首页模块&#10;HomeFragment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="255" y="200" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m3" value="信息登记模块&#10;ProfileFragment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="200" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m4" value="校园公告模块&#10;NoticeFragment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="725" y="200" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m5" value="提醒服务模块" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="200" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" value="首页 / 公告 / 我的&#10;三标签页切换&#10;FragmentTransaction" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="20" y="320" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="标题 / 头像 / Banner 图&#10;功能图标（公告/登记/提醒/关于）&#10;最新公告卡片" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="255" y="320" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="多字段输入&#10;（姓名/班级/电话/服务类型/备注）&#10;保存 / 查看 / 清空&#10;SharedPreferences 持久化 + 自动回显" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="490" y="320" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="本地 JSON 读取解析&#10;（NoticeRepository）&#10;RecyclerView 列表（NoticeAdapter）&#10;&quot;设为提醒&quot;入口" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="725" y="320" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="ReminderService（后台读数据）&#10;ReminderReceiver（接收广播）&#10;Notification（系统通知）&#10;NotificationHelper（通知渠道）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="960" y="320" width="210" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" style="endArrow=classic;html=1;" edge="1" parent="1" source="root" target="m1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r2" style="endArrow=classic;html=1;" edge="1" parent="1" source="root" target="m2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r3" style="endArrow=classic;html=1;" edge="1" parent="1" source="root" target="m3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r4" style="endArrow=classic;html=1;" edge="1" parent="1" source="root" target="m4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="r5" style="endArrow=classic;html=1;" edge="1" parent="1" source="root" target="m5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="c1" style="endArrow=none;html=1;" edge="1" parent="1" source="m1" target="s1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="c2" style="endArrow=none;html=1;" edge="1" parent="1" source="m2" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="c3" style="endArrow=none;html=1;" edge="1" parent="1" source="m3" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="c4" style="endArrow=none;html=1;" edge="1" parent="1" source="m4" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="c5" style="endArrow=none;html=1;" edge="1" parent="1" source="m5" target="s5"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
