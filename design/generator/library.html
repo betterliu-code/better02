@@ -22,8 +22,9 @@
     background:#E8E8E8; display:flex; gap:48px; padding:48px; align-items:flex-start;
     font-family:"Noto Sans SC", sans-serif; color:var(--ink);
   }
+  .wrap{ width:390px; height:844px; flex:none; }
   .screen{
-    width:390px; height:844px; background:var(--bg); flex:none;
+    width:390px; height:844px; background:var(--bg);
     position:relative; overflow:hidden; display:flex; flex-direction:column;
   }
 
@@ -145,7 +146,7 @@
   <script src="bundle.js"></script>
 
   <!-- ============ 1. 首页 / HOME ============ -->
-  <section class="screen" id="s1">
+  <div class="wrap"><section class="screen" id="s1">
     <div class="status"><span>9:41</span>
       <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
     </div>
@@ -230,10 +231,10 @@
       <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
       <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
     </div>
-  </section>
+  </section></div>
 
   <!-- ============ 2. 搜索结果 / RESULTS ============ -->
-  <section class="screen" id="s2">
+  <div class="wrap"><section class="screen" id="s2">
     <div class="status"><span>9:41</span>
       <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
     </div>
@@ -307,10 +308,10 @@
       <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
       <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
     </div>
-  </section>
+  </section></div>
 
   <!-- ============ 3. 图书详情 / DETAIL ============ -->
-  <section class="screen" id="s3">
+  <div class="wrap"><section class="screen" id="s3">
     <div class="status"><span>9:41</span>
       <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
     </div>
@@ -385,10 +386,10 @@
         <div class="btn btn-primary" style="flex:1;">借阅这本书</div>
       </div>
     </div>
-  </section>
+  </section></div>
 
   <!-- ============ 4. 馆内导航 / SHELF LOCATOR ============ -->
-  <section class="screen" id="s4">
+  <div class="wrap"><section class="screen" id="s4">
     <div class="status"><span>9:41</span>
       <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
     </div>
@@ -456,10 +457,10 @@
 
       <div class="btn btn-primary" style="margin-top:16px;">开始步行导航</div>
     </div>
-  </section>
+  </section></div>
 
   <!-- ============ 5. 我的借阅 / MY LOANS ============ -->
-  <section class="screen" id="s5">
+  <div class="wrap"><section class="screen" id="s5">
     <div class="status"><span>9:41</span>
       <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
     </div>
@@ -534,10 +535,10 @@
       <div class="tab on"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
       <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
     </div>
-  </section>
+  </section></div>
 
   <!-- ============ 6. 分类浏览 / CATEGORIES ============ -->
-  <section class="screen" id="s6">
+  <div class="wrap"><section class="screen" id="s6">
     <div class="status"><span>9:41</span>
       <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
     </div>
@@ -594,7 +595,7 @@
       <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
       <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
     </div>
-  </section>
+  </section></div>
 
 </body>
 </html>
