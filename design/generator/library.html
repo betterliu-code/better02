@@ -7,21 +7,24 @@
   @font-face { font-family: "Noto Serif SC"; src: url("/fonts/NotoSerifSC.ttf"); font-weight: 100 900; font-display: block; }
 
   :root{
-    --paper:#F6F4EF;        /* warm page background */
-    --card:#FFFFFF;
-    --ink:#211F1B;          /* primary text */
-    --ink-2:#6C685F;        /* secondary text */
-    --ink-3:#9C978B;        /* tertiary text */
-    --line:#E9E5DC;         /* hairline */
-    --line-2:#F0ECE3;
-    --green:#2F5A4B;        /* primary accent (library green) */
-    --green-soft:#E7EEEA;
-    --clay:#B25239;         /* borrowed / alert */
-    --clay-soft:#F4E6E1;
-    --brass:#A9803C;        /* call number / rating */
-    --brass-soft:#F2E9D8;
-    --avail:#2E7D5B;
-    --avail-soft:#E4F0EA;
+    --paper:#EFE6D2;        /* warm oat app background (not white) */
+    --card:#FBF5E6;         /* warm cream surface */
+    --card-2:#F6EEDB;       /* slightly deeper cream */
+    --ink:#2A2318;          /* warm near-black ink */
+    --ink-2:#6F6450;        /* secondary text */
+    --ink-3:#A2967C;        /* tertiary text */
+    --line:#E2D5B8;         /* hairline */
+    --line-2:#EADFC6;
+    --green:#1F4A38;        /* deep bottle green */
+    --green-2:#2C6149;
+    --green-soft:#DBE6DA;
+    --clay:#BC4F2E;         /* terracotta */
+    --clay-soft:#F2DECF;
+    --brass:#B07A22;        /* ochre / call number / rating */
+    --brass-soft:#F0E2BE;
+    --avail:#2E7048;
+    --avail-soft:#DCE9D4;
+    --cream:#FBF5E6;
   }
   *{ margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
   body{
@@ -56,6 +59,11 @@
   .icon-sm{ width:18px; height:18px; display:block; }
   .iconbtn{ width:40px; height:40px; border-radius:12px; background:var(--card);
     border:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+  .hero{ background:var(--green); border-radius:0 0 24px 24px; }
+  .status-on-dark{ color:#FBF5E6; }
+  .status-on-dark .bar{ background:#FBF5E6; }
+  .status-on-dark .bat{ border-color:#FBF5E6; }
+  .iconbtn.on-dark{ background:rgba(251,245,230,.12); border:1px solid rgba(251,245,230,.22); }
 
   /* search */
   .search{ display:flex; align-items:center; gap:10px; height:50px; background:var(--card);
@@ -135,6 +143,9 @@
   .seg .s{ flex:1; text-align:center; font-size:13px; font-weight:600; color:var(--ink-2);
     padding:8px 0; border-radius:9px; }
   .seg .s.on{ background:var(--card); color:var(--ink); box-shadow:0 1px 2px rgba(20,18,14,.06); }
+  .seg.on-dark{ background:rgba(251,245,230,.14); }
+  .seg.on-dark .s{ color:rgba(251,245,230,.7); }
+  .seg.on-dark .s.on{ background:var(--cream); color:var(--green); }
 
   .stars{ display:flex; gap:2px; }
   .progress{ height:6px; background:var(--line-2); border-radius:999px; overflow:hidden; }
@@ -152,28 +163,29 @@
 
   <!-- ============ 1. 首页 / HOME ============ -->
   <section class="screen" id="s1">
-    <div class="status"><span>9:41</span>
-      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
-    </div>
-    <div class="appbar">
-      <div class="row between">
-        <div>
-          <div class="kicker nowrap">市立图书馆 · 中心馆</div>
-          <div class="h-title nowrap" style="font-size:26px; margin-top:6px;">找一本好书</div>
+    <div class="hero">
+      <div class="status status-on-dark"><span>9:41</span>
+        <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+      </div>
+      <div style="padding:6px 22px 22px;">
+        <div class="row between">
+          <div>
+            <div class="kicker nowrap" style="color:rgba(251,245,230,.62);">市立图书馆 · 中心馆</div>
+            <div class="h-title nowrap" style="font-size:27px; margin-top:7px; color:#FBF5E6;">找一本好书</div>
+          </div>
+          <div class="iconbtn on-dark">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#FBF5E6" stroke-width="1.7"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.6"/></svg>
+          </div>
         </div>
-        <div class="iconbtn">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#211F1B" stroke-width="1.7"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.6"/></svg>
+        <div class="search" style="margin-top:18px;">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A2967C" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <span class="ph">搜索书名、作者或 ISBN</span>
         </div>
       </div>
     </div>
     <div class="body">
       <div class="scroll">
-        <div class="search" style="margin-top:16px;">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#9C978B" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
-          <span class="ph">搜索书名、作者或 ISBN</span>
-        </div>
-
-        <div class="chips" style="margin-top:16px;">
+        <div class="chips" style="margin-top:18px;">
           <span class="chip on">全部</span>
           <span class="chip">文学</span>
           <span class="chip">历史</span>
@@ -243,17 +255,19 @@
 
   <!-- ============ 2. 搜索结果 / RESULTS ============ -->
   <section class="screen" id="s2">
-    <div class="status"><span>9:41</span>
-      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
-    </div>
-    <div class="appbar">
-      <div class="row gap12">
-        <div class="iconbtn" style="width:40px;">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#211F1B" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>
-        </div>
-        <div class="search" style="flex:1;">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#9C978B" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
-          <span class="q">三体</span>
+    <div class="hero">
+      <div class="status status-on-dark"><span>9:41</span>
+        <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+      </div>
+      <div style="padding:6px 22px 20px;">
+        <div class="row gap12">
+          <div class="iconbtn on-dark" style="width:40px;">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#FBF5E6" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>
+          </div>
+          <div class="search" style="flex:1;">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A2967C" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+            <span class="q">三体</span>
+          </div>
         </div>
       </div>
     </div>
@@ -320,20 +334,23 @@
 
   <!-- ============ 3. 图书详情 / DETAIL ============ -->
   <section class="screen" id="s3">
-    <div class="status"><span>9:41</span>
-      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
-    </div>
-    <div class="appbar">
-      <div class="row between">
-        <div class="iconbtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#211F1B" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></div>
-        <div class="iconbtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#211F1B" stroke-width="1.7"><path d="M6 4h12v16l-6-4-6 4z"/></svg></div>
+    <div class="hero">
+      <div class="status status-on-dark"><span>9:41</span>
+        <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+      </div>
+      <div style="padding:6px 22px 18px;">
+        <div class="row between">
+          <div class="iconbtn on-dark"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#FBF5E6" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></div>
+          <div class="kicker nowrap" style="color:rgba(251,245,230,.7);">图书详情</div>
+          <div class="iconbtn on-dark"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#FBF5E6" stroke-width="1.7"><path d="M6 4h12v16l-6-4-6 4z"/></svg></div>
+        </div>
       </div>
     </div>
     <div class="body">
       <div class="scroll">
-        <div class="row gap16" style="margin-top:12px;">
-          <div class="cover c-green" style="width:108px; height:156px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:15px;">三体</div><div class="ca">刘慈欣</div></div></div>
-          <div style="flex:1; min-width:0;">
+        <div class="row gap16" style="margin-top:16px; align-items:flex-end;">
+          <div class="cover c-green" style="width:108px; height:156px; box-shadow:0 6px 18px rgba(20,18,10,.16);"><span class="spine"></span><div></div><div><div class="ct" style="font-size:15px;">三体</div><div class="ca">刘慈欣</div></div></div>
+          <div style="flex:1; min-width:0; padding-bottom:6px;">
             <div class="serif w7 nowrap" style="font-size:23px; line-height:1.25;">三体</div>
             <div class="t-sm muted" style="margin-top:6px;">刘慈欣 · 科幻</div>
             <div class="row gap8" style="margin-top:12px;">
@@ -400,19 +417,21 @@
 
   <!-- ============ 4. 馆内导航 / SHELF LOCATOR ============ -->
   <section class="screen" id="s4">
-    <div class="status"><span>9:41</span>
-      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
-    </div>
-    <div class="appbar">
+    <div class="hero">
+      <div class="status status-on-dark"><span>9:41</span>
+        <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+      </div>
+      <div style="padding:6px 22px 20px;">
       <div class="row between">
-        <div class="iconbtn shrink0"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#211F1B" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></div>
+        <div class="iconbtn on-dark shrink0"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#FBF5E6" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></div>
         <div style="flex:1; text-align:center;">
-          <div class="kicker nowrap">馆内导航</div>
-          <div class="serif w7 nowrap" style="font-size:16px; margin-top:3px;">三层 · 中文社科区</div>
+          <div class="kicker nowrap" style="color:rgba(251,245,230,.66);">馆内导航</div>
+          <div class="serif w7 nowrap" style="font-size:16px; margin-top:3px; color:#FBF5E6;">三层 · 中文社科区</div>
         </div>
-        <div class="seg shrink0" style="width:54px; padding:3px;">
+        <div class="seg on-dark shrink0" style="width:54px; padding:3px;">
           <span class="s on" style="font-size:12px; padding:5px 0;">3F</span>
         </div>
+      </div>
       </div>
     </div>
     <div class="body">
@@ -478,18 +497,20 @@
 
   <!-- ============ 5. 我的借阅 / MY LOANS ============ -->
   <section class="screen" id="s5">
-    <div class="status"><span>9:41</span>
-      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
-    </div>
-    <div class="appbar">
-      <div class="row between">
-        <div class="h-title" style="font-size:24px;">我的借阅</div>
-        <div class="iconbtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#211F1B" stroke-width="1.7"><path d="M12 3a6 6 0 0 0-6 6v3l-2 3h16l-2-3V9a6 6 0 0 0-6-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></div>
+    <div class="hero">
+      <div class="status status-on-dark"><span>9:41</span>
+        <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
       </div>
-      <div class="seg" style="margin-top:16px;">
-        <span class="s on">在借 3</span>
-        <span class="s">预约 1</span>
-        <span class="s">历史</span>
+      <div style="padding:6px 22px 20px;">
+        <div class="row between">
+          <div class="h-title" style="font-size:24px; color:#FBF5E6;">我的借阅</div>
+          <div class="iconbtn on-dark"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#FBF5E6" stroke-width="1.7"><path d="M12 3a6 6 0 0 0-6 6v3l-2 3h16l-2-3V9a6 6 0 0 0-6-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></div>
+        </div>
+        <div class="seg on-dark" style="margin-top:16px;">
+          <span class="s on">在借 3</span>
+          <span class="s">预约 1</span>
+          <span class="s">历史</span>
+        </div>
       </div>
     </div>
     <div class="body">
@@ -564,20 +585,21 @@
 
   <!-- ============ 6. 分类浏览 / CATEGORIES ============ -->
   <section class="screen" id="s6">
-    <div class="status"><span>9:41</span>
-      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
-    </div>
-    <div class="appbar">
-      <div class="kicker">按类目浏览</div>
-      <div class="h-title" style="font-size:24px; margin-top:6px;">馆藏分类</div>
+    <div class="hero">
+      <div class="status status-on-dark"><span>9:41</span>
+        <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+      </div>
+      <div style="padding:6px 22px 22px;">
+        <div class="kicker nowrap" style="color:rgba(251,245,230,.62);">按类目浏览</div>
+        <div class="h-title" style="font-size:25px; margin-top:7px; color:#FBF5E6;">馆藏分类</div>
+        <div class="search" style="margin-top:18px;">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A2967C" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <span class="ph">在分类中查找</span>
+        </div>
+      </div>
     </div>
     <div class="body">
       <div class="scroll">
-        <div class="search" style="margin-top:16px;">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#9C978B" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
-          <span class="ph">在分类中查找</span>
-        </div>
-
         <div class="catgrid" style="margin-top:18px;">
           <div class="catcard">
             <div class="caticon" style="background:#E7EEEA;">
@@ -604,13 +626,13 @@
             <div><div class="serif w7 t-md">艺术</div><div class="t-xs muted3" style="margin-top:3px;">5,320 册</div></div>
           </div>
           <div class="catcard">
-            <div class="caticon" style="background:#EDE7F0;">
+            <div class="caticon" style="background:#EDE1DF;">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#5A3B52" stroke-width="1.7"><path d="M12 3a9 9 0 1 0 0 18 4 4 0 0 1 0-8 5 5 0 0 0 0-10z"/></svg>
             </div>
             <div><div class="serif w7 t-md">哲学</div><div class="t-xs muted3" style="margin-top:3px;">3,910 册</div></div>
           </div>
           <div class="catcard">
-            <div class="caticon" style="background:#E6EEF0;">
+            <div class="caticon" style="background:#E2E9DF;">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#2B5560" stroke-width="1.7"><rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
             </div>
             <div><div class="serif w7 t-md">科技</div><div class="t-xs muted3" style="margin-top:3px;">7,150 册</div></div>
