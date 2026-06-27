@@ -28,12 +28,13 @@
 
 ## 二、系统结构与技术路线
 
-应用采用 Android 原生四大组件 + 单 Activity 多页面的经典结构，各模块关系如下：
+应用采用 Android 原生四大组件 + 单 Activity（底部导航）多 Fragment 的经典结构，各模块关系如下：
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                        用户交互层 (UI)                          │
-│  MainActivity(首页)  ProfileActivity(登记)  NoticeListActivity │
+│  MainActivity + BottomNavigationView                          │
+│   ├ HomeFragment(首页) ├ NoticeFragment(公告) ├ ProfileFragment │
 │  Layout: ConstraintLayout / LinearLayout / GridLayout / Card  │
 └───────────────┬───────────────────────────┬──────────────────┘
                 │                           │
@@ -52,7 +53,7 @@
                               └─────────────────────────────┘
 ```
 
-技术路线：用户操作 → Activity 处理交互 → 通过 `SharedPreferences` 保存/回显数据、通过 `NoticeRepository` 读取并解析本地 JSON → 列表展示 → "设为提醒"触发 `Service`，`Service` 读取数据后发送广播 → `BroadcastReceiver` 弹出系统 `Notification`。
+技术路线：用户通过底部导航在 Fragment 间切换 → Fragment 处理交互 → 通过 `SharedPreferences` 保存/回显数据、通过 `NoticeRepository` 读取并解析本地 JSON → 列表展示 → "设为提醒"触发 `Service`，`Service` 读取数据后发送广播 → `BroadcastReceiver` 弹出系统 `Notification`。
 
 ---
 
@@ -60,16 +61,18 @@
 
 ```
 校园生活助手 APP
-├── 首页模块 (MainActivity)
+├── 主框架 (MainActivity + 底部导航 BottomNavigationView)
+│   └── 首页 / 公告 / 我的 三个标签页切换
+├── 首页模块 (HomeFragment)
 │   ├── 标题 / 头像 / 副标题
 │   ├── 主题 Banner 图片
 │   ├── 功能图标区（公告 / 登记 / 提醒 / 关于）
 │   └── 最新公告卡片（主题服务信息展示）
-├── 信息登记模块 (ProfileActivity)
+├── 信息登记模块 (ProfileFragment)
 │   ├── 多字段输入（姓名 / 班级 / 电话 / 服务类型 / 备注）
 │   ├── 保存 / 查看 / 清空 交互
 │   └── SharedPreferences 持久化 + 自动回显
-├── 校园公告模块 (NoticeListActivity)
+├── 校园公告模块 (NoticeFragment)
 │   ├── 本地 JSON 读取与解析 (NoticeRepository)
 │   ├── RecyclerView 列表展示 (NoticeAdapter)
 │   └── "设为提醒"入口
@@ -80,18 +83,19 @@
 ```
 
 核心模块说明：
-- **首页 MainActivity**：聚合所有功能入口，启动即创建通知渠道并申请通知权限；从本地数据加载并展示最新一条公告。
-- **信息登记 ProfileActivity**：演示输入、交互、本地保存与回显；使用 `SharedPreferences` 保存姓名、班级、电话、服务类型、备注等多个字段。
-- **公告列表 NoticeListActivity + NoticeRepository + NoticeAdapter**：读取 `assets/notices.json`，解析为 `Notice` 列表并通过 `RecyclerView` 展示。
+- **主框架 MainActivity**：承载 `BottomNavigationView`，在「首页 / 公告 / 我的」三个 Fragment 间切换；启动即创建通知渠道并申请通知权限。
+- **首页 HomeFragment**：聚合功能入口与最新公告展示，公告/登记入口会切换到对应底部标签。
+- **信息登记 ProfileFragment**：演示输入、交互、本地保存与回显；使用 `SharedPreferences` 保存姓名、班级、电话、服务类型、备注等多个字段。
+- **公告列表 NoticeFragment + NoticeRepository + NoticeAdapter**：读取 `assets/notices.json`，解析为 `Notice` 列表并通过 `RecyclerView` 展示。
 - **提醒服务 ReminderService / ReminderReceiver**：完整体现 Service → 广播 → 通知的提醒链路。
 
 ---
 
 ## 四、使用说明
 
-1. 打开 APP 进入首页，可看到标题、Banner 图、四个功能入口与"最新公告"卡片。
-2. 点击 **校园公告** 进入公告列表，浏览教务通知、活动报名、课程提醒、失物招领、便民服务等信息；点击某条公告的 **设为提醒**，通知栏会弹出该公告提醒。
-3. 点击 **信息登记** 进入登记页，填写姓名、班级、联系电话、选择服务类型、填写备注，点击 **保存**，提示"保存成功"并在下方回显；**再次打开 APP / 进入该页面会自动回显上次保存的信息**。点击 **查看已保存信息** 可随时查看，**清空** 可删除本地数据。
+1. 打开 APP 进入首页，可看到标题、Banner 图、四个功能入口与"最新公告"卡片；底部导航栏可在 **首页 / 公告 / 我的** 之间切换。
+2. 点击底部 **公告**（或首页的校园公告入口）进入公告列表，浏览教务通知、活动报名、课程提醒、失物招领、便民服务等信息；点击某条公告的 **设为提醒**，通知栏会弹出该公告提醒。
+3. 点击底部 **我的**（或首页的信息登记入口）进入登记页，填写姓名、班级、联系电话、选择服务类型、填写备注，点击 **保存**，提示"保存成功"并在下方回显；**再次打开 APP / 进入该页面会自动回显上次保存的信息**。点击 **查看已保存信息** 可随时查看，**清空** 可删除本地数据。
 4. 首页点击 **课程提醒**，后台服务读取本地课程提醒数据并通过通知栏推送提醒。
 5. 点击 **关于我们** 查看应用信息。
 
@@ -108,7 +112,8 @@
 - compileSdk / targetSdk 34，minSdk 26
 
 ### 5.2 关键代码说明
-- **本地保存（SharedPreferences）** —— `ProfileActivity#saveProfile()` / `restoreProfile()`：以多个 key 保存多字段，`onCreate` 中调用 `restoreProfile()` 实现自动回显。
+- **底部导航切换** —— `MainActivity` 通过 `BottomNavigationView.setOnItemSelectedListener` 用 `FragmentTransaction.replace()` 切换三个 Fragment。
+- **本地保存（SharedPreferences）** —— `ProfileFragment#saveProfile()` / `restoreProfile()`：以多个 key 保存多字段，`onViewCreated` 中调用 `restoreProfile()` 实现自动回显。
 - **本地 JSON 读取解析** —— `NoticeRepository#loadNotices()`：从 `assets` 读取文件，用 `org.json` 解析为 `Notice` 列表，解析失败安全返回空列表，避免闪退。
 - **Service + 广播 + 通知** —— `ReminderService#onHandleIntent()` 读取数据后 `sendBroadcast()`；`ReminderReceiver#onReceive()` 构建并弹出 `NotificationCompat` 通知；`NotificationHelper` 统一创建通知渠道。
 - **列表展示** —— `NoticeAdapter` 绑定 `item_notice.xml`，并通过回调接口处理"设为提醒"点击。
@@ -122,9 +127,10 @@ better02/
 │       ├── AndroidManifest.xml      # 组件与权限声明
 │       ├── assets/notices.json      # 本地公告数据
 │       ├── java/com/campuslife/app/
-│       │   ├── MainActivity.java        # 首页
-│       │   ├── ProfileActivity.java     # 信息登记 + 本地保存/回显
-│       │   ├── NoticeListActivity.java  # 公告列表
+│       │   ├── MainActivity.java        # 主框架 + 底部导航
+│       │   ├── HomeFragment.java        # 首页
+│       │   ├── ProfileFragment.java     # 信息登记 + 本地保存/回显
+│       │   ├── NoticeFragment.java      # 公告列表
 │       │   ├── Notice.java              # 数据模型
 │       │   ├── NoticeRepository.java    # 本地 JSON 读取解析
 │       │   ├── NoticeAdapter.java       # 列表适配器
@@ -148,9 +154,9 @@ better02/
 
 ## 六、运行截图
 
-| 首页 | 校园公告列表 | 信息登记（空） |
+| 首页（底部导航） | 公告列表 | 我的（信息登记） |
 | :---: | :---: | :---: |
-| ![首页](docs/screenshots/01_home.png) | ![公告列表](docs/screenshots/02_notice_list.png) | ![信息登记](docs/screenshots/03_profile_empty.png) |
+| ![首页](docs/screenshots/01_home.png) | ![公告列表](docs/screenshots/02_notice_list.png) | ![信息登记](docs/screenshots/03_profile.png) |
 
 | 保存成功 | 数据回显 | 通知提醒 |
 | :---: | :---: | :---: |

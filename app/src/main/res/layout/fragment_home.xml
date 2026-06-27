@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 顶部标题栏：头像 + 标题 + 副标题 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_header"
+            android:elevation="2dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_avatar_circle"
+                android:padding="6dp"
+                android:src="@drawable/ic_avatar"
+                android:contentDescription="@string/app_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="@string/home_title"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivAvatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivAvatar" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/home_subtitle"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/ivAvatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 主题 Banner 图片 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/banner"
+                android:contentDescription="@string/home_title" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- 功能图标区（2x2 网格） -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:columnCount="2"
+            android:useDefaultMargins="true">
+
+            <LinearLayout
+                android:id="@+id/menuNotice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_menu_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_circle_icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_notice"
+                    android:contentDescription="@string/menu_notice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/menu_notice"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/menuProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_menu_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_circle_icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_profile"
+                    android:contentDescription="@string/menu_profile" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/menu_profile"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/menuRemind"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_menu_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_circle_icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_remind"
+                    android:contentDescription="@string/menu_remind" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/menu_remind"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/menuAbout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/bg_menu_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_circle_icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_about"
+                    android:contentDescription="@string/menu_about" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/menu_about"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </GridLayout>
+
+        <!-- 最新公告标题 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:text="最新公告"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- 最新公告卡片（首页直接展示一条主题服务信息） -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:id="@+id/cardLatestNotice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="?attr/selectableItemBackground"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvLatestCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="教务通知"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvLatestTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="加载中…"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_location"
+                        android:contentDescription="@string/menu_notice" />
+
+                    <TextView
+                        android:id="@+id/tvLatestLocation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_time"
+                        android:contentDescription="@string/menu_notice" />
+
+                    <TextView
+                        android:id="@+id/tvLatestTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+    </LinearLayout>
+</ScrollView>

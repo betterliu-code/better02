@@ -3,6 +3,11 @@
     <string name="home_title">校园生活助手 APP</string>
     <string name="home_subtitle">一站式校园服务 · 通知 · 报名 · 提醒</string>
 
+    <!-- 底部导航 -->
+    <string name="nav_home">首页</string>
+    <string name="nav_notice">公告</string>
+    <string name="nav_profile">我的</string>
+
     <!-- 功能入口 -->
     <string name="menu_notice">校园公告</string>
     <string name="menu_profile">信息登记</string>

@@ -21,14 +21,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".NoticeListActivity"
-            android:exported="false" />
-
         <!-- 课程/活动提醒服务，读取本地数据并发送通知 -->
         <service
             android:name=".ReminderService"

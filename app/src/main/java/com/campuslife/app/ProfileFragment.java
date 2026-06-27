@@ -1,8 +1,12 @@
 package com.campuslife.app;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,13 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
- * 个人信息登记页：实现输入、提交交互，并使用 SharedPreferences
+ * 个人信息登记 Fragment：实现输入、提交交互，并使用 SharedPreferences
  * 进行多字段本地保存与下次打开自动回显。
  */
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileFragment extends Fragment {
 
     private static final String PREF_NAME = "campus_profile";
     private static final String KEY_NAME = "name";
@@ -34,26 +40,29 @@ public class ProfileActivity extends AppCompatActivity {
 
     private SharedPreferences prefs;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.profile_title);
-        }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
 
-        prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        etName = findViewById(R.id.etName);
-        etClass = findViewById(R.id.etClass);
-        etPhone = findViewById(R.id.etPhone);
-        spServiceType = findViewById(R.id.spServiceType);
-        etNote = findViewById(R.id.etNote);
-        tvResult = findViewById(R.id.tvResult);
+        prefs = requireContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
-        Button btnSave = findViewById(R.id.btnSave);
-        Button btnQuery = findViewById(R.id.btnQuery);
-        Button btnClear = findViewById(R.id.btnClear);
+        etName = view.findViewById(R.id.etName);
+        etClass = view.findViewById(R.id.etClass);
+        etPhone = view.findViewById(R.id.etPhone);
+        spServiceType = view.findViewById(R.id.spServiceType);
+        etNote = view.findViewById(R.id.etNote);
+        tvResult = view.findViewById(R.id.tvResult);
+
+        Button btnSave = view.findViewById(R.id.btnSave);
+        Button btnQuery = view.findViewById(R.id.btnQuery);
+        Button btnClear = view.findViewById(R.id.btnClear);
 
         btnSave.setOnClickListener(v -> saveProfile());
         btnQuery.setOnClickListener(v -> showSavedProfile());
@@ -79,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
         editor.putString(KEY_NOTE, etNote.getText().toString().trim());
         editor.apply();
 
-        Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
         showSavedProfile();
     }
 
@@ -119,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
         etNote.setText("");
         spServiceType.setSelection(0);
         tvResult.setText(R.string.no_record);
-        Toast.makeText(this, "已清空保存的信息", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "已清空保存的信息", Toast.LENGTH_SHORT).show();
     }
 
     private String getSelectedServiceType() {
