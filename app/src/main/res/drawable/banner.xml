@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="160dp"
+    android:viewportWidth="360"
+    android:viewportHeight="160">
+    <!-- 天空背景 -->
+    <path android:fillColor="#E8F5E9" android:pathData="M0,0h360v160h-360z" />
+    <!-- 太阳 -->
+    <path android:fillColor="#FFD54F" android:pathData="M300,40m-22,0a22,22 0,1 1,44 0a22,22 0,1 1,-44 0" />
+    <!-- 远处教学楼 -->
+    <path android:fillColor="#A5D6A7" android:pathData="M30,150L30,80L90,80L90,150Z" />
+    <path android:fillColor="#81C784" android:pathData="M100,150L100,60L160,60L160,150Z" />
+    <path android:fillColor="#66BB6A" android:pathData="M170,150L170,90L230,90L230,150Z" />
+    <path android:fillColor="#A5D6A7" android:pathData="M240,150L240,70L300,70L300,150Z" />
+    <!-- 楼体窗户 -->
+    <path android:fillColor="#FFFFFF" android:pathData="M110,75h12v12h-12z M138,75h12v12h-12z M110,100h12v12h-12z M138,100h12v12h-12z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M250,85h12v12h-12z M278,85h12v12h-12z M250,110h12v12h-12z M278,110h12v12h-12z" />
+    <!-- 地面 -->
+    <path android:fillColor="#4CAF50" android:pathData="M0,150h360v10h-360z" />
+    <!-- 树 -->
+    <path android:fillColor="#2E7D32" android:pathData="M335,150m-18,0a18,18 0,1 1,36 0a18,18 0,1 1,-36 0" />
+    <path android:fillColor="#795548" android:pathData="M331,150h8v10h-8z" />
+</vector>
