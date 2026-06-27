@@ -1,0 +1,8 @@
+[
+  { "selector": "#s1", "width": 390, "height": 844, "x": 0,    "y": 0, "name": "01 首页 · 发现" },
+  { "selector": "#s2", "width": 390, "height": 844, "x": 450,  "y": 0, "name": "02 搜索结果" },
+  { "selector": "#s3", "width": 390, "height": 844, "x": 900,  "y": 0, "name": "03 图书详情" },
+  { "selector": "#s4", "width": 390, "height": 844, "x": 1350, "y": 0, "name": "04 馆内导航" },
+  { "selector": "#s5", "width": 390, "height": 844, "x": 1800, "y": 0, "name": "05 我的借阅" },
+  { "selector": "#s6", "width": 390, "height": 844, "x": 2250, "y": 0, "name": "06 馆藏分类" }
+]
