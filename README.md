@@ -146,4 +146,14 @@ better02/
 # 或使用 Android Studio：File > Open 选择本目录，连接模拟器/真机后点击 Run
 ```
 
-运行截图见 [`docs/`](docs/) 目录。
+## 六、运行截图
+
+| 首页 | 校园公告列表 | 信息登记（空） |
+| :---: | :---: | :---: |
+| ![首页](docs/screenshots/01_home.png) | ![公告列表](docs/screenshots/02_notice_list.png) | ![信息登记](docs/screenshots/03_profile_empty.png) |
+
+| 保存成功 | 数据回显 | 通知提醒 |
+| :---: | :---: | :---: |
+| ![保存成功](docs/screenshots/04_profile_saved.png) | ![数据回显](docs/screenshots/05_profile_echo.png) | ![通知提醒](docs/screenshots/06_notification.png) |
+
+> 以上截图在 Android 模拟器（Pixel 5 / Android 14）实机运行采集。

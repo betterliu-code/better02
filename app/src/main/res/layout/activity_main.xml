@@ -16,9 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_header"
+            android:elevation="2dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:paddingTop="28dp"
+            android:paddingTop="32dp"
             android:paddingBottom="24dp">
 
             <ImageView
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 android:text="@string/home_title"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/ivAvatar"
@@ -52,7 +53,7 @@
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="4dp"
                 android:text="@string/home_subtitle"
-                android:textColor="#E0FFFFFF"
+                android:textColor="@color/text_secondary"
                 android:textSize="13sp"
                 app:layout_constraintStart_toEndOf="@id/ivAvatar"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,8 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -217,8 +218,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="3dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
 
             <LinearLayout
                 android:id="@+id/cardLatestNotice"
@@ -232,7 +233,7 @@
                     android:id="@+id/tvLatestCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/primary_light"
+                    android:background="@drawable/bg_chip"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:paddingTop="2dp"
