@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: "Noto Sans SC"; src: url("/fonts/NotoSansSC.ttf"); font-weight: 100 900; font-display: block; }
+  @font-face { font-family: "Noto Serif SC"; src: url("/fonts/NotoSerifSC.ttf"); font-weight: 100 900; font-display: block; }
+
+  :root{
+    --bg:#FFFFFF;
+    --card:#FFFFFF;
+    --ink:#161616;       /* primary text / black */
+    --ink-2:#6E6E6E;     /* secondary */
+    --ink-3:#A6A6A6;     /* tertiary */
+    --line:#ECECEC;      /* hairline */
+    --line-2:#F4F4F4;
+    --fill:#F6F6F6;      /* subtle fill (chips, covers, segmented) */
+    --fill-2:#FAFAFA;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+  body{
+    background:#E8E8E8; display:flex; gap:48px; padding:48px; align-items:flex-start;
+    font-family:"Noto Sans SC", sans-serif; color:var(--ink);
+  }
+  .wrap{ width:390px; height:844px; flex:none; }
+  .screen{
+    width:390px; height:844px; background:var(--bg);
+    position:relative; overflow:hidden; display:flex; flex-direction:column;
+  }
+
+  .status{ height:44px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 22px; font-size:13px; font-weight:600; color:var(--ink); }
+  .status .dots{ display:flex; align-items:center; gap:5px; }
+  .status .bar{ width:4px; height:9px; background:var(--ink); border-radius:1px; }
+  .status .bat{ width:22px; height:11px; border:1.5px solid var(--ink); border-radius:3px; }
+
+  .head{ padding:6px 22px 16px; }
+  .kicker{ font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-3); font-weight:600; }
+  .h-title{ font-family:"Noto Serif SC", serif; font-weight:700; color:var(--ink); letter-spacing:.01em; }
+  .row{ display:flex; align-items:center; }
+  .between{ justify-content:space-between; }
+  .gap6{gap:6px;} .gap8{ gap:8px;} .gap10{gap:10px;} .gap12{gap:12px;} .gap14{gap:14px;} .gap16{gap:16px;}
+  .nowrap{ white-space:nowrap; } .shrink0{ flex-shrink:0; }
+
+  .body{ flex:1; padding:0 22px; overflow:hidden; }
+  .scroll{ padding-bottom:18px; }
+
+  .icon{ width:22px; height:22px; display:block; }
+  .icon-sm{ width:18px; height:18px; display:block; }
+  .iconbtn{ width:40px; height:40px; border-radius:11px; background:var(--bg);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+
+  /* search */
+  .search{ display:flex; align-items:center; gap:10px; height:50px; background:var(--bg);
+    border:1px solid var(--line); border-radius:12px; padding:0 14px; }
+  .search .ph{ font-size:15px; color:var(--ink-3); }
+  .search .q{ font-size:15px; color:var(--ink); font-weight:500; }
+
+  /* chips */
+  .chips{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip{ font-size:13px; color:var(--ink-2); background:var(--bg); border:1px solid var(--line);
+    padding:8px 15px; border-radius:999px; font-weight:500; }
+  .chip.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  /* card */
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; }
+  .pad16{ padding:16px; } .pad18{padding:18px;}
+
+  /* book cover — light neutral placeholder, no color */
+  .cover{ border-radius:4px; position:relative; overflow:hidden; display:flex;
+    flex-direction:column; justify-content:space-between; padding:10px;
+    background:var(--fill); border:1px solid var(--line); color:var(--ink); }
+  .cover .ct{ font-family:"Noto Serif SC", serif; font-weight:700; font-size:13px; line-height:1.3; }
+  .cover .ca{ font-size:9px; color:var(--ink-3); font-weight:500; }
+  .cover .spine{ position:absolute; left:0; top:0; bottom:0; width:4px; background:rgba(0,0,0,.05); }
+  /* all variants resolve to the same neutral surface (kept for markup compatibility) */
+  .c-green,.c-ink,.c-clay,.c-brass,.c-plum,.c-teal,.c-olive,.c-rust{ background:var(--fill); }
+  .c-ink,.c-teal{ background:#F1F1F1; }
+  .c-clay,.c-plum{ background:#F3F3F3; }
+
+  /* badges — monochrome, dot indicates state */
+  .badge{ font-size:11px; font-weight:600; padding:4px 10px 4px 8px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:6px; background:var(--fill); color:var(--ink); }
+  .badge .d{ width:5px; height:5px; border-radius:50%; background:var(--ink); }
+  .b-ok .d{ background:var(--ink); }
+  .b-out{ color:var(--ink-3); }
+  .b-out .d{ background:transparent; border:1px solid var(--ink-3); }
+  .b-hold{ color:var(--ink-2); }
+  .b-hold .d{ background:var(--ink-2); }
+  .callno{ font-size:11px; font-weight:600; color:var(--ink-2); background:var(--fill);
+    padding:3px 8px; border-radius:5px; letter-spacing:.02em; }
+
+  /* buttons */
+  .btn{ height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    gap:8px; font-size:15px; font-weight:600; white-space:nowrap; flex-shrink:0; }
+  .btn-primary{ background:var(--ink); color:#fff; }
+  .btn-ghost{ background:var(--bg); color:var(--ink); border:1px solid var(--line); }
+
+  /* list row */
+  .brow{ display:flex; gap:14px; padding:16px 0; border-bottom:1px solid var(--line-2); }
+  .brow:last-child{ border-bottom:none; }
+
+  .t-xs{font-size:11px;} .t-sm{font-size:13px;} .t-md{font-size:15px;} .t-lg{font-size:17px;}
+  .muted{ color:var(--ink-2);} .muted3{color:var(--ink-3);}
+  .w5{font-weight:500;} .w6{font-weight:600;} .w7{font-weight:700;}
+  .serif{ font-family:"Noto Serif SC", serif; }
+
+  /* tab bar */
+  .tabbar{ height:78px; background:var(--bg); border-top:1px solid var(--line);
+    display:flex; align-items:flex-start; padding:11px 8px 0; }
+  .tab{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .tab .tl{ font-size:10px; color:var(--ink-3); font-weight:500; }
+  .tab.on .tl{ color:var(--ink); font-weight:600; }
+
+  /* shelf map — monochrome */
+  .map{ background:var(--fill-2); border:1px solid var(--line); border-radius:14px; position:relative;
+    height:360px; overflow:hidden; }
+  .shelf{ position:absolute; background:#E7E7E7; border-radius:2px; }
+  .shelf.t{ background:var(--ink); }
+  .pin{ position:absolute; width:32px; height:32px; border-radius:50% 50% 50% 2px;
+    background:var(--ink); transform:rotate(45deg); display:flex; align-items:center; justify-content:center; }
+  .pin i{ width:10px; height:10px; background:#fff; border-radius:50%; transform:rotate(-45deg); }
+  .youare{ position:absolute; width:13px; height:13px; border-radius:50%; background:#fff; border:3px solid var(--ink); }
+
+  .divider{ height:1px; background:var(--line); }
+  .meta-g{ display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; }
+  .meta-k{ font-size:11px; color:var(--ink-3); font-weight:500; }
+  .meta-v{ font-size:14px; color:var(--ink); font-weight:600; margin-top:3px; }
+
+  .seg{ display:flex; background:var(--fill); border-radius:11px; padding:4px; }
+  .seg .s{ flex:1; text-align:center; font-size:13px; font-weight:600; color:var(--ink-2);
+    padding:9px 0; border-radius:8px; }
+  .seg .s.on{ background:var(--bg); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.05); }
+
+  .stars{ display:flex; gap:2px; }
+
+  /* category grid */
+  .catgrid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .catcard{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px;
+    display:flex; flex-direction:column; gap:14px; height:116px; justify-content:space-between; }
+  .caticon{ width:40px; height:40px; border-radius:11px; background:var(--fill);
+    display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+  <script src="bundle.js"></script>
+
+  <!-- ============ 1. 首页 / HOME ============ -->
+  <div class="wrap"><section class="screen" id="s1">
+    <div class="status"><span>9:41</span>
+      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+    </div>
+    <div class="head">
+      <div class="row between">
+        <div>
+          <div class="kicker nowrap">市立图书馆 · 中心馆</div>
+          <div class="h-title nowrap" style="font-size:27px; margin-top:8px;">找一本好书</div>
+        </div>
+        <div class="iconbtn">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.6"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="scroll">
+        <div class="search">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <span class="ph">搜索书名、作者或 ISBN</span>
+        </div>
+
+        <div class="chips" style="margin-top:16px;">
+          <span class="chip on">全部</span>
+          <span class="chip">文学</span>
+          <span class="chip">历史</span>
+          <span class="chip">科学</span>
+          <span class="chip">艺术</span>
+        </div>
+
+        <div class="card pad18" style="margin-top:18px;">
+          <div class="row between">
+            <span class="t-xs w6 muted3" style="letter-spacing:.16em;">我的借阅</span>
+            <span class="t-xs w6 muted3">查看全部</span>
+          </div>
+          <div class="row" style="margin-top:16px;">
+            <div style="flex:1;">
+              <div class="serif w7" style="font-size:30px; line-height:1;">3</div>
+              <div class="t-xs muted3" style="margin-top:7px;">在借图书</div>
+            </div>
+            <div style="width:1px; height:40px; background:var(--line);"></div>
+            <div style="flex:1; padding-left:18px;">
+              <div class="serif w7" style="font-size:30px; line-height:1;">1</div>
+              <div class="t-xs muted3" style="margin-top:7px;">即将到期</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="t-xs muted3">最近应还</div>
+              <div class="t-sm w6" style="margin-top:7px;">6 月 30 日</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row between" style="margin-top:24px;">
+          <span class="serif w7" style="font-size:18px;">新书上架</span>
+          <span class="t-sm muted3 w5">更多</span>
+        </div>
+        <div class="row gap12" style="margin-top:14px;">
+          <div class="cover c-ink" style="width:104px; height:148px;"><span class="spine"></span><div></div><div><div class="ct">沙丘</div><div class="ca">弗兰克·赫伯特</div></div></div>
+          <div class="cover c-clay" style="width:104px; height:148px;"><span class="spine"></span><div></div><div><div class="ct">人类简史</div><div class="ca">尤瓦尔·赫拉利</div></div></div>
+          <div class="cover c-brass" style="width:104px; height:148px;"><span class="spine"></span><div></div><div><div class="ct">长安的荔枝</div><div class="ca">马伯庸</div></div></div>
+        </div>
+
+        <div class="card pad16" style="margin-top:20px;">
+          <div class="row gap14">
+            <div class="cover c-green" style="width:62px; height:88px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:11px;">三体</div></div></div>
+            <div style="flex:1;">
+              <div class="t-xs w6 muted3" style="letter-spacing:.14em;">本周馆员推荐</div>
+              <div class="serif w7" style="font-size:16px; margin-top:6px;">三体</div>
+              <div class="t-sm muted" style="margin-top:3px;">刘慈欣 · 科幻</div>
+              <div class="row gap8" style="margin-top:11px;">
+                <span class="badge b-ok"><span class="d"></span>在架可借</span>
+                <span class="callno">I247.5 / L728</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <div class="tab on"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg><span class="tl">首页</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><span class="tl">搜索</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.4"/></svg><span class="tl">导航</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
+    </div>
+  </section></div>
+
+  <!-- ============ 2. 搜索结果 / RESULTS ============ -->
+  <div class="wrap"><section class="screen" id="s2">
+    <div class="status"><span>9:41</span>
+      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+    </div>
+    <div class="head">
+      <div class="row gap12">
+        <div class="iconbtn shrink0">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>
+        </div>
+        <div class="search" style="flex:1;">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <span class="q">三体</span>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="scroll">
+        <div class="row between">
+          <span class="t-sm muted nowrap">找到 <b style="color:var(--ink)">28</b> 条馆藏结果</span>
+          <div class="row gap8">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#6E6E6E" stroke-width="1.8"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+            <span class="t-sm w6 muted">筛选</span>
+          </div>
+        </div>
+        <div class="chips" style="margin-top:12px;">
+          <span class="chip on">可借阅</span>
+          <span class="chip">中心馆</span>
+          <span class="chip">中文</span>
+          <span class="chip">按相关度</span>
+        </div>
+
+        <div style="margin-top:4px;">
+          <div class="brow">
+            <div class="cover c-green" style="width:60px; height:86px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:11px;">三体</div></div></div>
+            <div style="flex:1;">
+              <div class="row between"><span class="serif w7 t-md">三体</span><span class="badge b-ok"><span class="d"></span>在架</span></div>
+              <div class="t-sm muted" style="margin-top:4px;">刘慈欣 · 重庆出版社</div>
+              <div class="row gap8" style="margin-top:11px;"><span class="callno">I247.5 / L728</span><span class="t-xs muted3">中文社科区 · B 区</span></div>
+            </div>
+          </div>
+          <div class="brow">
+            <div class="cover c-ink" style="width:60px; height:86px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:10px;">三体 II<br>黑暗森林</div></div></div>
+            <div style="flex:1;">
+              <div class="row between"><span class="serif w7 t-md">三体 II · 黑暗森林</span><span class="badge b-out"><span class="d"></span>已借出</span></div>
+              <div class="t-sm muted" style="margin-top:4px;">刘慈欣 · 重庆出版社</div>
+              <div class="row gap8" style="margin-top:11px;"><span class="callno">I247.5 / L729</span><span class="t-xs muted3">预计 7 月 2 日归还</span></div>
+            </div>
+          </div>
+          <div class="brow">
+            <div class="cover c-clay" style="width:60px; height:86px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:10px;">三体 III<br>死神永生</div></div></div>
+            <div style="flex:1;">
+              <div class="row between"><span class="serif w7 t-md">三体 III · 死神永生</span><span class="badge b-ok"><span class="d"></span>在架</span></div>
+              <div class="t-sm muted" style="margin-top:4px;">刘慈欣 · 重庆出版社</div>
+              <div class="row gap8" style="margin-top:11px;"><span class="callno">I247.5 / L730</span><span class="t-xs muted3">中文社科区 · B 区</span></div>
+            </div>
+          </div>
+          <div class="brow">
+            <div class="cover c-teal" style="width:60px; height:86px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:10px;">三体<br>问题集</div></div></div>
+            <div style="flex:1;">
+              <div class="row between"><span class="serif w7 t-md">三体中的物理学</span><span class="badge b-hold"><span class="d"></span>可预约</span></div>
+              <div class="t-sm muted" style="margin-top:4px;">李淼 · 四川科技出版社</div>
+              <div class="row gap8" style="margin-top:11px;"><span class="callno">O4-49 / L</span><span class="t-xs muted3">自然科学区 · C 区</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg><span class="tl">首页</span></div>
+      <div class="tab on"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><span class="tl">搜索</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.4"/></svg><span class="tl">导航</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
+    </div>
+  </section></div>
+
+  <!-- ============ 3. 图书详情 / DETAIL ============ -->
+  <div class="wrap"><section class="screen" id="s3">
+    <div class="status"><span>9:41</span>
+      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+    </div>
+    <div class="head">
+      <div class="row between">
+        <div class="iconbtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></div>
+        <div class="kicker nowrap">图书详情</div>
+        <div class="iconbtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M6 4h12v16l-6-4-6 4z"/></svg></div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="scroll">
+        <div class="row gap16" style="margin-top:10px; align-items:flex-end;">
+          <div class="cover c-green" style="width:108px; height:156px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:15px;">三体</div><div class="ca">刘慈欣</div></div></div>
+          <div style="flex:1; min-width:0; padding-bottom:4px;">
+            <div class="serif w7 nowrap" style="font-size:24px; line-height:1.2;">三体</div>
+            <div class="t-sm muted" style="margin-top:7px;">刘慈欣 · 科幻</div>
+            <div class="row gap8" style="margin-top:13px;">
+              <div class="stars">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#161616"><path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8 6.8 19l1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#161616"><path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8 6.8 19l1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#161616"><path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8 6.8 19l1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#161616"><path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8 6.8 19l1-5.8-4.2-4.1 5.8-.8z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9C9C9" stroke-width="1.6"><path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8 6.8 19l1-5.8-4.2-4.1 5.8-.8z"/></svg>
+              </div>
+              <span class="t-sm w6">4.6</span>
+              <span class="t-xs muted3 nowrap">1,284 评价</span>
+            </div>
+            <div class="row gap8" style="margin-top:14px;">
+              <span class="badge b-ok"><span class="d"></span>在架可借</span>
+              <span class="callno">I247.5 / L728</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card pad16" style="margin-top:20px;">
+          <div class="row between">
+            <div style="min-width:0;">
+              <div class="t-xs w6 muted3" style="letter-spacing:.12em;">馆藏位置</div>
+              <div class="t-md w6 nowrap" style="margin-top:7px;">三层 · 中文社科区</div>
+              <div class="t-sm muted nowrap" style="margin-top:3px;">B 区 · 第 12 排书架</div>
+            </div>
+            <div class="btn btn-primary" style="width:92px; height:42px; font-size:14px;">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.4"/></svg>
+              找到它
+            </div>
+          </div>
+          <div class="divider" style="margin:15px 0;"></div>
+          <div class="row between t-sm">
+            <span class="muted">可借复本</span><span class="w6">2 / 4 在架</span>
+          </div>
+        </div>
+
+        <div class="meta-g" style="margin-top:20px;">
+          <div><div class="meta-k">出版社</div><div class="meta-v">重庆出版社</div></div>
+          <div><div class="meta-k">出版年</div><div class="meta-v">2008</div></div>
+          <div><div class="meta-k">ISBN</div><div class="meta-v">978-7-5366-9293-0</div></div>
+          <div><div class="meta-k">页数</div><div class="meta-v">302 页</div></div>
+        </div>
+
+        <div class="serif w7" style="font-size:16px; margin-top:22px;">内容简介</div>
+        <p class="t-sm" style="color:var(--ink-2); line-height:1.75; margin-top:9px;">
+          文化大革命如火如荼进行的同时，军方探寻外星文明的绝秘计划取得了突破，地球文明向宇宙发出的第一声啼鸣，被四光年外的三体文明截获……一部关于人类命运与宇宙图景的科幻史诗。
+        </p>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--line); padding:14px 22px 22px;">
+      <div class="row gap12">
+        <div class="btn btn-ghost" style="width:54px;">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M6 4h12v16l-6-4-6 4z"/></svg>
+        </div>
+        <div class="btn btn-primary" style="flex:1;">借阅这本书</div>
+      </div>
+    </div>
+  </section></div>
+
+  <!-- ============ 4. 馆内导航 / SHELF LOCATOR ============ -->
+  <div class="wrap"><section class="screen" id="s4">
+    <div class="status"><span>9:41</span>
+      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+    </div>
+    <div class="head">
+      <div class="row between">
+        <div class="iconbtn shrink0"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></div>
+        <div style="flex:1; text-align:center;">
+          <div class="kicker nowrap">馆内导航</div>
+          <div class="serif w7 nowrap" style="font-size:16px; margin-top:4px;">三层 · 中文社科区</div>
+        </div>
+        <div class="seg shrink0" style="width:54px; padding:3px;">
+          <span class="s on" style="font-size:12px; padding:5px 0;">3F</span>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="map" style="margin-top:6px;">
+        <div class="shelf" style="left:22px; top:18px; width:90px; height:16px;"></div>
+        <div class="shelf" style="left:22px; top:52px; width:90px; height:16px;"></div>
+        <div class="shelf" style="left:22px; top:86px; width:90px; height:16px;"></div>
+        <div class="shelf" style="left:22px; top:120px; width:90px; height:16px;"></div>
+
+        <div class="shelf" style="left:150px; top:18px; width:90px; height:16px;"></div>
+        <div class="shelf" style="left:150px; top:52px; width:90px; height:16px;"></div>
+        <div class="shelf t" style="left:150px; top:86px; width:90px; height:16px;"></div>
+        <div class="shelf" style="left:150px; top:120px; width:90px; height:16px;"></div>
+
+        <div class="shelf" style="left:278px; top:18px; width:70px; height:16px;"></div>
+        <div class="shelf" style="left:278px; top:52px; width:70px; height:16px;"></div>
+        <div class="shelf" style="left:278px; top:86px; width:70px; height:16px;"></div>
+        <div class="shelf" style="left:278px; top:120px; width:70px; height:16px;"></div>
+
+        <div class="shelf" style="left:40px; top:210px; width:130px; height:90px; background:transparent; border:1px dashed #D6D6D6;"></div>
+        <div class="shelf" style="left:210px; top:210px; width:120px; height:50px; background:#F0F0F0;"></div>
+
+        <svg style="position:absolute; left:0; top:0; width:100%; height:100%;" viewBox="0 0 346 360" fill="none">
+          <path d="M70 255 L70 150 L120 150 L120 95 L150 95" stroke="#161616" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/>
+        </svg>
+
+        <div class="youare" style="left:62px; top:248px;"></div>
+        <div class="pin" style="left:179px; top:70px;"><i></i></div>
+
+        <div style="position:absolute; left:44px; top:320px; font-size:11px; color:#A6A6A6; font-weight:600;">阅览区</div>
+        <div style="position:absolute; left:222px; top:227px; font-size:11px; color:#A6A6A6; font-weight:600;">服务台</div>
+      </div>
+
+      <div class="card pad16" style="margin-top:16px;">
+        <div class="row gap14">
+          <div class="cover c-green" style="width:50px; height:70px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:9px;">三体</div></div></div>
+          <div style="flex:1;">
+            <div class="t-xs w6 muted3" style="letter-spacing:.12em;">目标书架</div>
+            <div class="serif w7" style="font-size:18px; margin-top:5px;">B 区 · 第 12 排</div>
+            <div class="row gap8" style="margin-top:9px;"><span class="callno">I247.5 / L728</span><span class="t-xs muted3">第 3 层 · 上数第 2 格</span></div>
+          </div>
+        </div>
+        <div class="divider" style="margin:15px 0;"></div>
+        <div class="row between">
+          <div class="row gap10" style="min-width:0;">
+            <svg class="icon-sm shrink0" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span class="t-sm w6 nowrap">主通道直行，右转第二排</span>
+          </div>
+          <span class="t-sm w7 nowrap" style="margin-left:10px;">35 步</span>
+        </div>
+      </div>
+
+      <div class="btn btn-primary" style="margin-top:16px;">开始步行导航</div>
+    </div>
+  </section></div>
+
+  <!-- ============ 5. 我的借阅 / MY LOANS ============ -->
+  <div class="wrap"><section class="screen" id="s5">
+    <div class="status"><span>9:41</span>
+      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+    </div>
+    <div class="head">
+      <div class="row between">
+        <div class="h-title" style="font-size:25px;">我的借阅</div>
+        <div class="iconbtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M12 3a6 6 0 0 0-6 6v3l-2 3h16l-2-3V9a6 6 0 0 0-6-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></div>
+      </div>
+      <div class="seg" style="margin-top:16px;">
+        <span class="s on">在借 3</span>
+        <span class="s">预约 1</span>
+        <span class="s">历史</span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="scroll">
+        <div class="card pad16" style="margin-top:4px;">
+          <div class="row gap14">
+            <div class="cover c-ink" style="width:46px; height:66px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:9px;">沙丘</div></div></div>
+            <div style="flex:1;">
+              <div class="serif w7 t-md">沙丘</div>
+              <div class="t-sm muted" style="margin-top:4px;">弗兰克·赫伯特</div>
+              <div class="row gap8" style="margin-top:9px;"><span class="badge b-out"><span class="d"></span>3 天后到期</span></div>
+            </div>
+          </div>
+          <div class="divider" style="margin:14px 0;"></div>
+          <div class="row between">
+            <div><div class="t-xs muted3">应还日期</div><div class="t-sm w6" style="margin-top:4px;">6 月 30 日</div></div>
+            <div class="btn btn-primary" style="width:94px; height:40px; font-size:14px;">续借</div>
+          </div>
+        </div>
+
+        <div class="card pad16" style="margin-top:14px;">
+          <div class="row gap14">
+            <div class="cover c-clay" style="width:46px; height:66px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:8px;">人类简史</div></div></div>
+            <div style="flex:1;">
+              <div class="serif w7 t-md">人类简史</div>
+              <div class="t-sm muted" style="margin-top:4px;">尤瓦尔·赫拉利</div>
+              <div class="row gap8" style="margin-top:9px;"><span class="badge b-ok"><span class="d"></span>借阅中</span></div>
+            </div>
+          </div>
+          <div class="divider" style="margin:14px 0;"></div>
+          <div class="row between">
+            <div><div class="t-xs muted3">应还日期</div><div class="t-sm w6" style="margin-top:4px;">7 月 14 日</div></div>
+            <div class="btn btn-ghost" style="width:94px; height:40px; font-size:14px;">续借</div>
+          </div>
+        </div>
+
+        <div class="card pad16" style="margin-top:14px;">
+          <div class="row gap14">
+            <div class="cover c-brass" style="width:46px; height:66px;"><span class="spine"></span><div></div><div><div class="ct" style="font-size:8px;">长安的荔枝</div></div></div>
+            <div style="flex:1;">
+              <div class="serif w7 t-md">长安的荔枝</div>
+              <div class="t-sm muted" style="margin-top:4px;">马伯庸</div>
+              <div class="row gap8" style="margin-top:9px;"><span class="badge b-ok"><span class="d"></span>借阅中</span></div>
+            </div>
+          </div>
+          <div class="divider" style="margin:14px 0;"></div>
+          <div class="row between">
+            <div><div class="t-xs muted3">应还日期</div><div class="t-sm w6" style="margin-top:4px;">7 月 18 日</div></div>
+            <div class="btn btn-ghost" style="width:94px; height:40px; font-size:14px;">续借</div>
+          </div>
+        </div>
+
+        <div class="t-xs muted3" style="text-align:center; margin-top:20px;">本年度可借额度 12 本 · 已用 3 本</div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg><span class="tl">首页</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><span class="tl">搜索</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.4"/></svg><span class="tl">导航</span></div>
+      <div class="tab on"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
+    </div>
+  </section></div>
+
+  <!-- ============ 6. 分类浏览 / CATEGORIES ============ -->
+  <div class="wrap"><section class="screen" id="s6">
+    <div class="status"><span>9:41</span>
+      <div class="dots"><div class="bar" style="height:5px"></div><div class="bar" style="height:7px"></div><div class="bar"></div><div class="bat"></div></div>
+    </div>
+    <div class="head">
+      <div class="kicker nowrap">按类目浏览</div>
+      <div class="h-title" style="font-size:25px; margin-top:8px;">馆藏分类</div>
+      <div class="search" style="margin-top:16px;">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <span class="ph">在分类中查找</span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="scroll">
+        <div class="catgrid">
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M4 5h16v14H4z"/><path d="M9 5v14"/></svg></div>
+            <div><div class="serif w7 t-md">文学</div><div class="t-xs muted3" style="margin-top:4px;">12,480 册</div></div>
+          </div>
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></div>
+            <div><div class="serif w7 t-md">历史</div><div class="t-xs muted3" style="margin-top:4px;">8,210 册</div></div>
+          </div>
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M9 3v6l-5 9a3 3 0 0 0 3 4h10a3 3 0 0 0 3-4l-5-9V3"/><path d="M9 3h6"/></svg></div>
+            <div><div class="serif w7 t-md">科学</div><div class="t-xs muted3" style="margin-top:4px;">9,640 册</div></div>
+          </div>
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><circle cx="13" cy="11" r="8"/><circle cx="9" cy="8" r="1"/><circle cx="16" cy="9" r="1"/><circle cx="16" cy="13" r="1"/></svg></div>
+            <div><div class="serif w7 t-md">艺术</div><div class="t-xs muted3" style="margin-top:4px;">5,320 册</div></div>
+          </div>
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M12 3a9 9 0 1 0 0 18 4 4 0 0 1 0-8 5 5 0 0 0 0-10z"/></svg></div>
+            <div><div class="serif w7 t-md">哲学</div><div class="t-xs muted3" style="margin-top:4px;">3,910 册</div></div>
+          </div>
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg></div>
+            <div><div class="serif w7 t-md">科技</div><div class="t-xs muted3" style="margin-top:4px;">7,150 册</div></div>
+          </div>
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M4 19V5l8 3 8-3v14l-8 3-8-3z"/><path d="M12 8v14"/></svg></div>
+            <div><div class="serif w7 t-md">地理</div><div class="t-xs muted3" style="margin-top:4px;">2,880 册</div></div>
+          </div>
+          <div class="catcard">
+            <div class="caticon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.7"><path d="M12 3l8 4v6c0 5-4 7-8 8-4-1-8-3-8-8V7z"/></svg></div>
+            <div><div class="serif w7 t-md">少儿</div><div class="t-xs muted3" style="margin-top:4px;">6,470 册</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg><span class="tl">首页</span></div>
+      <div class="tab on"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><span class="tl">搜索</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.4"/></svg><span class="tl">导航</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg><span class="tl">借阅</span></div>
+      <div class="tab"><svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span class="tl">我的</span></div>
+    </div>
+  </section></div>
+
+</body>
+</html>

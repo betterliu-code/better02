@@ -1,0 +1,22 @@
+{
+  "name": "library-finder-fig-generator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "把 6 个图书馆找书 UI 页面 (library.html) 逆向生成为真正的 Figma .fig 文件",
+  "scripts": {
+    "fonts": "bash download-fonts.sh",
+    "build": "esbuild src/entry.js --bundle --format=iife --outfile=bundle.js --platform=browser --define:global=globalThis",
+    "generate": "node run.mjs library.html \"../图书馆找书.fig\" lib_spec.json \"图书馆找书 · 移动端\"",
+    "preview": "node shot.mjs http://localhost:8123/library.html ../preview.png",
+    "validate": "node validate.mjs \"../图书馆找书.fig\""
+  },
+  "dependencies": {
+    "@figit/dom-to-figma": "0.0.2",
+    "esbuild": "^0.25.0",
+    "fig-kiwi": "0.0.1",
+    "kiwi-schema": "0.5.0",
+    "pako": "^2.1.0",
+    "playwright-core": "^1.50.0"
+  }
+}
