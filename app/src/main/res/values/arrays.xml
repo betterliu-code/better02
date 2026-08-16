@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="service_types">
+        <item>校园资讯订阅</item>
+        <item>活动报名</item>
+        <item>课程提醒</item>
+        <item>失物招领</item>
+        <item>便民服务</item>
+    </string-array>
+</resources>

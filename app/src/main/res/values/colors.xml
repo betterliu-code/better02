@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主题以白色为主，绿色作为点缀色 -->
+    <color name="primary">#2E9E5B</color>
+    <color name="primary_dark">#1F7A45</color>
+    <color name="primary_light">#E7F6EE</color>
+    <color name="accent">#FF8F00</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="bg">#F6F8FA</color>
+    <color name="divider">#EEF1F4</color>
+
+    <color name="text_primary">#1A1F2C</color>
+    <color name="text_secondary">#7A828F</color>
+</resources>

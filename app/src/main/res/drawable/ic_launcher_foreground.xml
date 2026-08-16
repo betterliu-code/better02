@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 学士帽图形，象征校园 -->
+    <group android:translateX="26" android:translateY="34">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M28,0L0,12L28,24L56,12Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M12,20L12,32C12,36 20,40 28,40C36,40 44,36 44,32L44,20L28,26Z" />
+        <path
+            android:fillColor="#FFC107"
+            android:pathData="M52,14L52,30L55,30L55,14Z" />
+    </group>
+</vector>
